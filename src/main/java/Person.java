@@ -30,6 +30,10 @@ public class Person implements Serializable {
 		this.name = name;
 		this.surname = surname;
 	}
+
+    public int getID(){
+        return this.ID;
+    }
         
         
         @Override

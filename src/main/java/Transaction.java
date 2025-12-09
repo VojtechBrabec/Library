@@ -22,4 +22,8 @@ public class Transaction implements Serializable {
         this.ID = ID;
     }
 
+    public int getID(){
+        return this.ID;
+    }
+
 }

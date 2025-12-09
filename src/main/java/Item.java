@@ -11,4 +11,8 @@ public class Item {
     protected Person author;
     protected int ID;
     //...
+
+    public int getID(){
+        return ID;
+    }
 }
