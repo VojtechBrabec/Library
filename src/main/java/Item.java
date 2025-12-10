@@ -7,16 +7,18 @@ public class Item {
     protected long ID;
 
     protected boolean borrowed;
-    protected ArrayList<Person> authors;
+//    protected ArrayList<Person> authors;
+    protected Person author;
     protected String title;
     protected String description;
     protected ArrayList<Genre> genres;
 
 
-    public Item(long ID, boolean borrowed, ArrayList<Person> authors, String title, String description, ArrayList<Genre>genres){
+    public Item(long ID, /*ArrayList<Person> authors,*/ Person author, String title, String description, ArrayList<Genre>genres){
         this.ID = ID;
-        this.borrowed = borrowed;
-        this.authors = authors;
+        this.borrowed = false;
+//        this.authors = authors;
+        this.author = author;
         this.title = title;
         this.description = description;
         this.genres = genres;
@@ -33,8 +35,11 @@ public class Item {
         return borrowed;
     }
 
-    public ArrayList<Person> getAuthors() {
-        return authors;
+//    public ArrayList<Person> getAuthors() {
+//        return authors;
+//    }
+    public Person getAuthor(){
+        return author;
     }
 
     public String getTitle() {

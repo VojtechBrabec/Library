@@ -8,16 +8,21 @@ public class Shelf implements Serializable{
     private ArrayList<Item> items;
     private HashMap <Long, Item> itemsMap;
 
-    public Shelf(long ID, String name, ArrayList<Item> items) {
-        this.ID = ID;
-        this.name = name;
-        this.items = items;
-    }
+//    public Shelf(long ID, String name, ArrayList<Item> items) {
+//        this.ID = ID;
+//        this.name = name;
+//        this.items = items;
+//    }
 
     public Shelf(long ID, String name){
         this.ID = ID;
         this.name = name;
         this.items = new ArrayList<>();
+    }
+
+    public void addItem(Item i){
+        items.add(i);
+        itemsMap.put(i.getID(), i);
     }
 
     public long getID() {

@@ -3,14 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/**
- *
- * @author brabev04
- */
+import java.util.ArrayList;
+import java.util.Date;
+
 public class Return extends Transaction{
     
-    public Return(long ID, Client client, Item item){
-        super(ID, client, item,'r');
+    public Return(long ID, Client client, ArrayList<Item> items, Date borrowedOn, Date latestReturnOn){
+        super(ID, client, items, 'R');
+
     }
 
 

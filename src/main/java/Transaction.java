@@ -8,6 +8,9 @@ public class Transaction implements Serializable {
     protected char transactionType;
     protected long ID;
 
+    private Borrow aborrow;
+    private Return aReturn;
+
 
 
     /**

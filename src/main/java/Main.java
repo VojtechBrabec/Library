@@ -9,15 +9,20 @@
  */
 public class Main {
     public static void main(String[]args){
-        Library l = new Library();
-        l.addPerson(2000,"Jaroslav", "Basta", new Contact(10, 777777777, "email"), 'C');
-        try{
-            BinaryObjectStore.save("../saves/newfile", l);
-            System.out.println(BinaryObjectStore.load("../saves/newfile"));
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
+//        Library l = new Library();
+//        l.addPerson(2000,"Jaroslav", "Basta", new Contact(10, 777777777, "email"), 'C');
+//        try{
+//            BinaryObjectStore.save("../saves/newfile", l);
+//            System.out.println(BinaryObjectStore.load("../saves/newfile"));
+//        }
+//        catch(Exception e){
+//            System.out.println(e);
+//        }
 
+
+        Library l = new Library();
+        l.addPerson(2000,"Jaroslav", "Novak", null, 'C');
+        l.addPerson(1999, "Jan", "Autor", null, 'A');
+        l.newShelf("Shelf1");
     }
 }

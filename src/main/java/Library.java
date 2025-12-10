@@ -24,9 +24,12 @@ public class Library implements Serializable{
         shelves = new ArrayList<>();
         this.idManager = new IDManager();
     }
-    public Library(HashMap<Long, Transaction> transactions, HashMap<Long, Person> people){
+
+
+    public Library(HashMap<Long, Transaction> transactions, HashMap<Long, Person> people, ArrayList<Shelf>shelves){
         this.people = people;
         this.transactions = transactions;
+        this.shelves = shelves;
         this.idManager = new IDManager();
     }
 
@@ -49,10 +52,46 @@ public class Library implements Serializable{
             case 'C':
                 people.put(ID, new Client(ID, birthYear, name, surname, contact));
                 break;
+            case 'A':
+                people.put(ID, new Author(ID, birthYear, name, surname));
+                break;
             default: people.put(ID, new Person(ID, birthYear, name, surname, contact));
         }
-
     }
+
+    public Shelf newShelf(String name){
+        Shelf s = new Shelf(newID(), name);
+        shelves.add(s);
+        return s;
+    }
+
+    public Item newItem(Shelf shelf, /*ArrayList<Person> authors,*/Person author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException{
+        if(shelf ==null || author == null ||title ==null||description ==null|| genres == null){
+            throw new IllegalArgumentException("Arguments can't be null");
+        }
+        Item i = new Item(newID(),author, title, description, genres);
+        shelf.addItem(i);
+        return i;
+    }
+
+
+    public Item newItem(long shelfID, /*ArrayList<Person> authors,*/ Person author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException, NullPointerException{
+        if(author == null ||title ==null||description ==null|| genres == null){
+            throw new IllegalArgumentException("Arguments can't be null");
+        }
+        if(shelves==null){
+            throw new NullPointerException("There are no shelves initialized in the library");
+        }
+        for(Shelf shelf : shelves){
+            if(shelf.getID() == shelfID){
+                Item i = new Item(newID(),author, title, description, genres);
+                shelf.addItem(i);
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("No such shelf exists");
+    }
+
 
 
     public void newBorrow(Client client, ArrayList<Item> itemsToBorrow, Date returnBy) throws IllegalArgumentException{

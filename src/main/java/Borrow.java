@@ -7,7 +7,7 @@ public class Borrow extends Transaction {
     protected Date latestReturnOn;
 
     public Borrow(long ID, Client client, ArrayList<Item> items, Date borrowedOn, Date latestReturnOn) {
-       super(ID, client, items, 'b');
+       super(ID, client, items, 'B');
        this.borrowedOn = borrowedOn;
        this.latestReturnOn = latestReturnOn;
     }
