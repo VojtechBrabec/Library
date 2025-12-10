@@ -10,7 +10,7 @@
 public class Main {
     public static void main(String[]args){
         Library l = new Library();
-        l.addPerson(0,2000,"Jaroslav", "Basta", new Contact(10, 777777777, "email"), 'C');
+        l.addPerson(2000,"Jaroslav", "Basta", new Contact(10, 777777777, "email"), 'C');
         try{
             BinaryObjectStore.save("../saves/newfile", l);
             System.out.println(BinaryObjectStore.load("../saves/newfile"));

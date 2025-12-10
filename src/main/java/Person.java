@@ -10,13 +10,13 @@ import java.io.Serializable;
  */
 public class Person implements Serializable {
     
-    protected int ID;
+    protected long ID;
 	protected int birthYear;
 	protected String name;
 	protected String surname;
 	protected Contact contact;
 
-	public Person(int ID, int birthYear, String name, String surname, Contact contact) {
+	public Person(long ID, int birthYear, String name, String surname, Contact contact) {
 		this.ID = ID;
 		this.birthYear = birthYear;
 		this.name = name;
@@ -24,14 +24,14 @@ public class Person implements Serializable {
 		this.contact = contact;
 	}
 
-	public Person(int ID, int birthYear, String name, String surname) {
+	public Person(long ID, int birthYear, String name, String surname) {
 		this.ID = ID;
 		this.birthYear = birthYear;
 		this.name = name;
 		this.surname = surname;
 	}
 
-    public int getID(){
+    public long getID(){
         return this.ID;
     }
         

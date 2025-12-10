@@ -1,17 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+import java.util.ArrayList;
+import java.util.Date;
 
-/**
- *
- * @author brabev04
- */
 public class Borrow extends Transaction {
-    
-   public Borrow(int ID, Client client, Item item){
-       super(ID, client, item, 'b');
-   } 
+
+    protected Date borrowedOn;
+    protected Date latestReturnOn;
+
+    public Borrow(long ID, Client client, ArrayList<Item> items, Date borrowedOn, Date latestReturnOn) {
+       super(ID, client, items, 'b');
+       this.borrowedOn = borrowedOn;
+       this.latestReturnOn = latestReturnOn;
+    }
+
+    private void setItemsBorrowed(){
+        for(Item i :items){
+            i.borrowed = true;
+        }
+    }
     
     
 }

@@ -10,7 +10,7 @@
 public class Client extends Person{
     
     
-    public Client(int ID, int birthYear, String name, String surname, Contact contact){
+    public Client(long ID, int birthYear, String name, String surname, Contact contact){
         super(ID, birthYear, name, surname, contact);
     }
     

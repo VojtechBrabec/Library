@@ -9,22 +9,22 @@
  * @author brabev04
  */
 public class Contact {
-	protected int ID;
+	protected long ID;
 	protected int phone;
 	protected String email;
 
-	public Contact(int ID, int phone, String email) {
+	public Contact(long ID, int phone, String email) {
 		this.ID = ID;
 		this.phone = phone;
 		this.email = email;
 	}
 
-	public Contact(int ID, int phone) {
+	public Contact(long ID, int phone) {
 		this.ID = ID;
 		this.phone = phone;
 	}
 
-	public Contact(int ID, String email) {
+	public Contact(long ID, String email) {
 		this.ID = ID;
 		this.email = email;
 	}
@@ -44,7 +44,7 @@ public class Contact {
 		return email;
 	}
 
-	public int getID(Person o) {
+	public long getID(Person o) {
 		if (o.getClass() != Employee.class) {
 			throw new IllegalArgumentException("Person neni zamestnanec");
 		}

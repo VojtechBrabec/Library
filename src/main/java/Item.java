@@ -1,18 +1,51 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
+import java.util.ArrayList;
 /**
  *
  * @author brabev04
  */
 public class Item {
-    protected Person author;
-    protected int ID;
-    //...
+    protected long ID;
 
-    public int getID(){
+    protected boolean borrowed;
+    protected ArrayList<Person> authors;
+    protected String title;
+    protected String description;
+    protected ArrayList<Genre> genres;
+
+
+    public Item(long ID, boolean borrowed, ArrayList<Person> authors, String title, String description, ArrayList<Genre>genres){
+        this.ID = ID;
+        this.borrowed = borrowed;
+        this.authors = authors;
+        this.title = title;
+        this.description = description;
+        this.genres = genres;
+    }
+
+
+
+
+    public long getID(){
         return ID;
+    }
+
+    public boolean isBorrowed() {
+        return borrowed;
+    }
+
+    public ArrayList<Person> getAuthors() {
+        return authors;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ArrayList<Genre> getGenres() {
+        return genres;
     }
 }

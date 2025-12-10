@@ -1,24 +1,26 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Shelf implements Serializable{
-    private int ID;
+    private long ID;
     private String name;
     private ArrayList<Item> items;
+    private HashMap <Long, Item> itemsMap;
 
-    public Shelf(int ID, String name, ArrayList<Item> items) {
+    public Shelf(long ID, String name, ArrayList<Item> items) {
         this.ID = ID;
         this.name = name;
         this.items = items;
     }
 
-    public Shelf(int ID, String name){
+    public Shelf(long ID, String name){
         this.ID = ID;
         this.name = name;
         this.items = new ArrayList<>();
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 
@@ -28,14 +30,19 @@ public class Shelf implements Serializable{
     public ArrayList<Item> getItems() {
         return items;
     }
-    public Item getItemByID(int ID){
-        for(Item i : items){
-            if(i.getID() == ID){
-                return i;
-            }
-        }
-        return null;
+    public Item getItemByID(long ID){
+//        for(Item i : items){
+//            if(i.getID() == ID){
+//                return i;
+//            }
+//        }
+        return itemsMap.get(ID);
     }
 
+    @Override
+    public String toString(){
+        String ret = "Name: " + name + "\nID: " + ID + "\n" + items.toString();
+        return ret;
+    }
 
 }

@@ -9,7 +9,9 @@
  */
 public class Return extends Transaction{
     
-    public Return(int ID, Client client, Item item){
+    public Return(long ID, Client client, Item item){
         super(ID, client, item,'r');
     }
+
+
 }
