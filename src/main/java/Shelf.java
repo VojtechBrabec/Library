@@ -6,7 +6,8 @@ public class Shelf implements Serializable{
     private long ID;
     private String name;
     private ArrayList<Item> items;
-    private HashMap <Long, Item> itemsMap;
+    private HashMap <Long, Item> itemsMap = new HashMap<>();
+    private int capacity = 100;
 
 //    public Shelf(long ID, String name, ArrayList<Item> items) {
 //        this.ID = ID;
@@ -23,6 +24,12 @@ public class Shelf implements Serializable{
     public void addItem(Item i){
         items.add(i);
         itemsMap.put(i.getID(), i);
+    }
+
+    public Shelf(long ID, String name, int capacity){
+        this.ID = ID;
+        this.name = name;
+        this.capacity=capacity;
     }
 
     public long getID() {

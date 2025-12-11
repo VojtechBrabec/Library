@@ -38,7 +38,11 @@ public class Person implements Serializable {
         
         @Override
         public String toString(){
-            String a = "[  " + name +" " + surname + " "+ birthYear + "\n"+contact.toString();
+            String a = "[ ID "+ID+" " + name +" " + surname + " "+ birthYear;
+            if(contact != null){
+                a += "\nContact: " + contact.toString();
+            }
+            a+=" ]";
             return a;
         }
     

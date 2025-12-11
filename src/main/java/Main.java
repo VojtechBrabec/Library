@@ -18,11 +18,21 @@ public class Main {
 //        catch(Exception e){
 //            System.out.println(e);
 //        }
-
-
         Library l = new Library();
-        l.addPerson(2000,"Jaroslav", "Novak", null, 'C');
-        l.addPerson(1999, "Jan", "Autor", null, 'A');
-        l.newShelf("Shelf1");
+
+        for(int i = 0; i<10; i++){
+            Shelf s = l.newShelf("Shelf"+1);
+            Person p = l.addPerson(1980+i, "Name"+i,"Surname"+i, null,'A');
+            for(int j = 0; j<10; j++){
+                l.newItem(s, p, "Title"+j, "Description"+j, l.newGenre("Fantasy", "Dungeons and Dragons"));
+            }
+        }
+
+        System.out.println(l);
+
+//        l.addPerson(2000,"Jaroslav", "Novak", null, 'C');
+//        l.addPerson(1999, "Jan", "Autor", null, 'A');
+//        Shelf s = l.newShelf("Shelf1");
+//        System.out.println(l);
     }
 }

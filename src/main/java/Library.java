@@ -43,20 +43,33 @@ public class Library implements Serializable{
      *                     - 'E' - Employee
      *                     - '' - default case, will be created as a Person;
      * */
-    public void addPerson(int birthYear, String name, String surname, Contact contact, char typeOfPerson){
+    public Person addPerson(int birthYear, String name, String surname, Contact contact, char typeOfPerson){
         long ID = newID();
+        Person p;
         switch (typeOfPerson){
             case 'E':
-                people.put(ID, new Employee(ID, birthYear, name, surname, contact));
+                p = new Employee(ID, birthYear, name, surname, contact);
+                people.put(ID, p);
                 break;
             case 'C':
-                people.put(ID, new Client(ID, birthYear, name, surname, contact));
+                p = new Client(ID, birthYear, name, surname, contact);
+                people.put(ID, p);
                 break;
             case 'A':
-                people.put(ID, new Author(ID, birthYear, name, surname));
+                p = new Author(ID, birthYear, name, surname);
+                people.put(ID, p);
                 break;
-            default: people.put(ID, new Person(ID, birthYear, name, surname, contact));
+            default:
+                p = new Person(ID, birthYear, name, surname, contact);
+                people.put(ID, p);
         }
+        return p;
+    }
+
+    public Shelf newShelf(String name, int capacity){
+        Shelf s = new Shelf(newID(), name, capacity);
+        shelves.add(s);
+        return s;
     }
 
     public Shelf newShelf(String name){
@@ -73,7 +86,14 @@ public class Library implements Serializable{
         shelf.addItem(i);
         return i;
     }
-
+    public Item newItem(Shelf shelf, /*ArrayList<Person> authors,*/Person author, String title, String description, Genre genre) throws IllegalArgumentException{
+        if(shelf ==null || author == null ||title ==null||description ==null|| genre == null){
+            throw new IllegalArgumentException("Arguments can't be null");
+        }
+        Item i = new Item(newID(),author, title, description, genre);
+        shelf.addItem(i);
+        return i;
+    }
 
     public Item newItem(long shelfID, /*ArrayList<Person> authors,*/ Person author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException, NullPointerException{
         if(author == null ||title ==null||description ==null|| genres == null){
@@ -92,6 +112,13 @@ public class Library implements Serializable{
         throw new IllegalArgumentException("No such shelf exists");
     }
 
+    public Genre newGenre(String name, String description) throws IllegalArgumentException{
+        if(name == null || description ==null){
+            throw new IllegalArgumentException("Arguments can't be null");
+        }
+        Genre g = new Genre(newID(), name, description);
+        return g;
+    }
 
 
     public void newBorrow(Client client, ArrayList<Item> itemsToBorrow, Date returnBy) throws IllegalArgumentException{
@@ -160,5 +187,16 @@ public class Library implements Serializable{
 
     private long newID(){
         return idManager.createNewID();
+    }
+
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Transactions:\n" + transactions.toString());
+        sb.append("\nPeople:\n" + people.toString());
+        sb.append("\nShelves:\n" + shelves.toString());
+
+        return sb.toString();
     }
 }
