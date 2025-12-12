@@ -8,6 +8,12 @@
  * @author brabev04
  */
 public class Main {
+
+    public static <T> void out(T o){
+        System.out.println(o);
+    }
+
+
     public static void main(String[]args){
 //        Library l = new Library();
 //        l.addPerson(2000,"Jaroslav", "Basta", new Contact(10, 777777777, "email"), 'C');
@@ -21,18 +27,38 @@ public class Main {
         Library l = new Library();
 
         for(int i = 0; i<10; i++){
-            Shelf s = l.newShelf("Shelf"+1);
-            Person p = l.addPerson(1980+i, "Name"+i,"Surname"+i, null,'A');
+            long sID = l.newShelf("Shelf"+1);
+            long pID = l.addPerson(1980+i, "Name"+i,"Surname"+i, null,Role.AUTHOR);
+            l.addPerson(1990+i, "Name"+i*100,"Surname"+i*100, null,Role.CLIENT);
+            Shelf s = l.getShelfByID(sID);
+            Person p =  l.getPersonByID(pID);
             for(int j = 0; j<10; j++){
-                l.newItem(s, p, "Title"+j, "Description"+j, l.newGenre("Fantasy", "Dungeons and Dragons"));
+                l.newItem(s, p, "Title"+i+j, "Description"+i+j, l.newGenre("Fantasy", "Dungeons and Dragons"));
             }
         }
 
-        System.out.println(l);
+//        out(l);
+        Item i = l.getItemByID(5);
+        Person client = l.getPersonByID(3);
+//        out(i);
+//        out(client);
+//        out(l.getTransactions());
 
-//        l.addPerson(2000,"Jaroslav", "Novak", null, 'C');
-//        l.addPerson(1999, "Jan", "Autor", null, 'A');
-//        Shelf s = l.newShelf("Shelf1");
-//        System.out.println(l);
+        out(client);
+
+        l.newBorrow(3L,5L,null);
+
+        out(client);
+//        out(i);
+
+        l.newReturn(231);
+
+        out(client);
+//        out(i);
+
+//        out(i);
+//        out(client);
+//        out(l.getTransactions());
+
     }
 }

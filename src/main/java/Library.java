@@ -5,6 +5,7 @@
 
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.lang.IllegalArgumentException;
 import java.util.HashMap;
@@ -15,7 +16,8 @@ public class Library implements Serializable{
     private ArrayList<Shelf> shelves;
     private IDManager idManager;
 
-    private final long defaultReturnBy = System.currentTimeMillis() + 14*24*60*60*1000;
+//    private final long defaultReturnBy = System.currentTimeMillis() + 14*24*60*60*1000;
+    private final Date defaultReturnBy = new Date(System.currentTimeMillis() + 14*24*60*60*1000);
 
 
     public Library(){
@@ -39,74 +41,81 @@ public class Library implements Serializable{
      * @param name - name;
      * @param surname - surname;
      * @param contact - contact;
-     * @param typeOfPerson - 'C' - Client
-     *                     - 'E' - Employee
-     *                     - '' - default case, will be created as a Person;
+     * @param role - CLIENT - Client
+     *             - EMPLYEE - Employee
+     *             - AUTHOR - Author
+     *             - DEFAULT - default case, will be created as a Person;
      * */
-    public Person addPerson(int birthYear, String name, String surname, Contact contact, char typeOfPerson){
+    public long addPerson(int birthYear, String name, String surname, Contact contact, Role role){
         long ID = newID();
         Person p;
-        switch (typeOfPerson){
-            case 'E':
-                p = new Employee(ID, birthYear, name, surname, contact);
+        switch (role){
+            case EMPLOYEE:
+                p = new Employee(ID, birthYear, name, surname, contact, Role.EMPLOYEE);
                 people.put(ID, p);
                 break;
-            case 'C':
-                p = new Client(ID, birthYear, name, surname, contact);
+            case CLIENT:
+                p = new Client(ID, birthYear, name, surname, contact, Role.CLIENT);
                 people.put(ID, p);
                 break;
-            case 'A':
-                p = new Author(ID, birthYear, name, surname);
+            case AUTHOR:
+                p = new Author(ID, birthYear, name, surname, Role.AUTHOR);
                 people.put(ID, p);
                 break;
             default:
-                p = new Person(ID, birthYear, name, surname, contact);
+                p = new Person(ID, birthYear, name, surname, contact, Role.DEFAULT);
                 people.put(ID, p);
         }
-        return p;
+        return ID;
     }
 
-    public Shelf newShelf(String name, int capacity){
-        Shelf s = new Shelf(newID(), name, capacity);
+    public long newShelf(String name, int capacity){
+        long ID = newID();
+        Shelf s = new Shelf(ID, name, capacity);
         shelves.add(s);
-        return s;
+        return ID;
     }
 
-    public Shelf newShelf(String name){
-        Shelf s = new Shelf(newID(), name);
+    public long newShelf(String name){
+        long ID = newID();
+        Shelf s = new Shelf(ID, name);
         shelves.add(s);
-        return s;
+        return ID;
     }
 
-    public Item newItem(Shelf shelf, /*ArrayList<Person> authors,*/Person author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException{
+    public long newItem(Shelf shelf, /*ArrayList<Person> authors,*/Person author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException{
         if(shelf ==null || author == null ||title ==null||description ==null|| genres == null){
             throw new IllegalArgumentException("Arguments can't be null");
         }
-        Item i = new Item(newID(),author, title, description, genres);
+        long ID = newID();
+        Item i = new Item(ID,author, title, description, genres);
         shelf.addItem(i);
-        return i;
+        return ID;
     }
-    public Item newItem(Shelf shelf, /*ArrayList<Person> authors,*/Person author, String title, String description, Genre genre) throws IllegalArgumentException{
+    public long newItem(Shelf shelf, /*ArrayList<Person> authors,*/Person author, String title, String description, Genre genre) throws IllegalArgumentException{
         if(shelf ==null || author == null ||title ==null||description ==null|| genre == null){
             throw new IllegalArgumentException("Arguments can't be null");
         }
-        Item i = new Item(newID(),author, title, description, genre);
+        long ID = newID();
+        Item i = new Item(ID,author, title, description, genre);
         shelf.addItem(i);
-        return i;
+        return ID;
     }
 
-    public Item newItem(long shelfID, /*ArrayList<Person> authors,*/ Person author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException, NullPointerException{
+    public long newItem(long shelfID, /*ArrayList<Person> authors,*/ Person author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException, NullPointerException{
         if(author == null ||title ==null||description ==null|| genres == null){
             throw new IllegalArgumentException("Arguments can't be null");
         }
         if(shelves==null){
             throw new NullPointerException("There are no shelves initialized in the library");
         }
+        long ID;
         for(Shelf shelf : shelves){
             if(shelf.getID() == shelfID){
-                Item i = new Item(newID(),author, title, description, genres);
+                ID = newID();
+                Item i = new Item(ID,author, title, description, genres);
                 shelf.addItem(i);
-                return i;
+                return ID;
             }
         }
         throw new IllegalArgumentException("No such shelf exists");
@@ -120,8 +129,42 @@ public class Library implements Serializable{
         return g;
     }
 
+    public Long newBorrow(long clientID, ArrayList<Long> itemsToBorrowID, Date returnBy){
+        Client c = (Client) this.getPersonByID(clientID);
+        if(returnBy == null){
+            returnBy = defaultReturnBy;
+        }
 
-    public void newBorrow(Client client, ArrayList<Item> itemsToBorrow, Date returnBy) throws IllegalArgumentException{
+        ArrayList<Item> itemsToBorrow = new ArrayList<>();
+        for(Long l : itemsToBorrowID){
+            itemsToBorrow.add(this.getItemByID(l));
+        }
+
+        return this.newBorrow(c, itemsToBorrow,returnBy);
+
+
+    }
+
+    public Long newBorrow(Long clientID,Long itemToBorrow, Date returBy){
+        Client c =  (Client) this.getPersonByID(clientID);
+        if(returBy == null){
+            returBy = defaultReturnBy;
+        }
+        ArrayList<Item> itemsToBorrow = new ArrayList<>();
+        itemsToBorrow.add(this.getItemByID(itemToBorrow));
+
+        long newBorrowID;
+        try{
+            newBorrowID = this.newBorrow(c, itemsToBorrow,returBy);
+        }catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+//            e.printStackTrace();
+        }
+
+        return newBorrowID = 0-1;
+    }
+
+    private long newBorrow(Client client, ArrayList<Item> itemsToBorrow, Date returnBy) throws IllegalArgumentException{
         if(client == null){
             throw new IllegalArgumentException("No client was selected");
         }
@@ -132,17 +175,57 @@ public class Library implements Serializable{
             throw new IllegalArgumentException("No items were selected");
         }
 
+
         for (Item i:itemsToBorrow){
             if(i.borrowed){
-                throw new IllegalArgumentException("Item " + i + " was already borrowed");
+                Transaction borrow = this.getTransactionByID(i.getInTransactionID());
+                throw new IllegalArgumentException("Item " + i + " was already borrowed in transaction \n" + borrow);
             }
         }
 
-        if(returnBy != null){
-            Borrow b = new Borrow(newID(), client, itemsToBorrow, new Date(), returnBy);
-        }else{
-            Borrow b = new Borrow(newID(), client, itemsToBorrow, new Date(), new Date(defaultReturnBy));
+
+        long borrowID = newID();
+        long returnID = newID();
+        Borrow b = new Borrow(borrowID, returnID, client, itemsToBorrow, new Date(), returnBy);
+        Return r = new Return(returnID, borrowID, client, itemsToBorrow);
+//        if(returnBy != null){
+//            b = new Borrow(borrowID, returnID, client, itemsToBorrow, new Date(), returnBy);
+//            r = new Return(returnID, borrowID, client, itemsToBorrow);
+//        }else{
+//            b = new Borrow(borrowID, returnID, client, itemsToBorrow, new Date(), defaultReturnBy);
+//            r = new Return(returnID, borrowID, client, itemsToBorrow);
+//        }
+        transactions.put(borrowID, b);
+        transactions.put(returnID, r);
+        client.addTransaction(b);
+        client.addTransaction(r);
+        return b.getID();
+    }
+
+
+
+        public Return newReturn(long borrowID){
+        Borrow borrow = (Borrow) getTransactionByID(borrowID);
+        if(borrow == null){
+            throw new IllegalArgumentException("The borrow with ID " + borrowID + " does not exist");
         }
+
+        Date shouldReturnOn = borrow.latestReturnOn;
+
+        Return r = (Return) transactions.get(borrow.getReturnID());
+        r.setItemsBorrowed(false);
+
+        Date returnDate = new Date();
+        r.setReturnedOnDate(returnDate);
+
+        if(!shouldReturnOn.after(returnDate)){
+            System.out.println("The return of the following items is late items:\n" + r.getItems().toString());
+        }
+        borrow.setIsActive(false);
+        return r;
+//        Client client = borrow.getClient();
+
+
     }
 
     public Object[] getItemInShelfByID(long itemID){
@@ -164,6 +247,10 @@ public class Library implements Serializable{
             }
         }
         return null;
+    }
+
+    public ArrayList<Shelf> getShelves(){
+        return shelves;
     }
 
     public Transaction getTransactionByID(long ID){
@@ -189,6 +276,30 @@ public class Library implements Serializable{
         return idManager.createNewID();
     }
 
+    public Collection<Person> getPeople(){
+        return people.values();
+    }
+
+    public Collection<Item> getItems(){
+        ArrayList<Item> items = new ArrayList<>();
+        for(Shelf s : shelves){
+            items.addAll(s.getItems());
+        }
+        return items;
+    }
+
+    public Shelf getShelfByID(long ID){
+        for(Shelf s : shelves){
+            if(s.getID() == ID){
+                return s;
+            }
+        }
+        throw new IllegalArgumentException("Shelf with ID " + ID + " does not exist.");
+    }
+
+    public Collection<Transaction> getTransactions(){
+        return transactions.values();
+    }
 
     @Override
     public String toString(){

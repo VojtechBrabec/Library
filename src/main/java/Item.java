@@ -5,6 +5,7 @@ import java.util.ArrayList;
  */
 public class Item {
     protected long ID;
+    protected long inTransactionID = -1;
 
     protected String title;
     protected String description;
@@ -65,16 +66,28 @@ public class Item {
         return genres;
     }
 
+    public void setBorrowed(boolean borrowed) {
+        this.borrowed = borrowed;
+    }
+
+    public void setInTransactionID(long ID){
+        this.inTransactionID = ID;
+    }
+
+    public long getInTransactionID(){
+        return  inTransactionID;
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("ID: " + ID + "\n");
+        sb.append("\n\nID: " + ID + "\n");
         sb.append("Title: " + title + "\n");
         sb.append("Description: " + description + "\n");
         sb.append("Aurthor: " + author+ "\n");
         sb.append("Genres: " + genres+ "\n");
         sb.append("Borrowed: " + borrowed + "\n");
-
+        if(borrowed) sb.append("In Transaction ID: " + inTransactionID + "\n");
         return sb.toString();
     }
 }

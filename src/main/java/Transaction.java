@@ -1,18 +1,13 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Transaction implements Serializable {
+public abstract class Transaction implements Serializable {
     
     protected Client client;
     protected ArrayList<Item> items;
     protected char transactionType;
     protected long ID;
-
-    private Borrow aborrow;
-    private Return aReturn;
-
-
-
+    protected boolean isActive = false;
     /**
      * @param transactionType : 'R' = return
      *                        : 'B' = borrow
@@ -24,6 +19,9 @@ public class Transaction implements Serializable {
         this.ID = ID;
     }
 
+    protected abstract void setItemsBorrowed(boolean borrowed);
+
+
     public long getID(){
         return this.ID;
     }
@@ -33,6 +31,15 @@ public class Transaction implements Serializable {
     }
     public ArrayList<Item> getItems(){
         return items;
+    }
+
+    public void setIsActive(boolean active){
+        isActive = active;
+    }
+
+    @Override
+    public String toString(){
+        return "[ ID: " + ID + " Client " + client + " Items: " + items.toString();
     }
 
 }

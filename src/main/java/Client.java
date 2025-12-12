@@ -10,8 +10,8 @@
 public class Client extends Person{
     
     
-    public Client(long ID, int birthYear, String name, String surname, Contact contact){
-        super(ID, birthYear, name, surname, contact);
+    public Client(long ID, int birthYear, String name, String surname, Contact contact, Role role){
+        super(ID, birthYear, name, surname, contact, role);
     }
     
 }

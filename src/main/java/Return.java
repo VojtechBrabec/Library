@@ -7,11 +7,35 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Return extends Transaction{
-    
-    public Return(long ID, Client client, ArrayList<Item> items, Date borrowedOn, Date latestReturnOn){
-        super(ID, client, items, 'R');
 
+    protected Date returnedOn;
+    long borrowID;
+
+//    public Return(long ID,long borrowID, Client client, ArrayList<Item> items, Date returnedOn){
+//        super(ID, client, items, 'R');
+//        this.returnedOn = returnedOn;
+//    }
+
+    public Return(long ID, long borrowID, Client client, ArrayList<Item>items){
+        super(ID, client, items, 'R');
+        this.borrowID = borrowID;
     }
 
+
+
+    protected void setItemsBorrowed(boolean borrowed){
+        for(Item i:items){
+            i.setBorrowed(borrowed);
+            i.setInTransactionID(-1);
+        }
+    }
+
+    public long getBorrowID(){
+        return borrowID;
+    }
+
+    public void setReturnedOnDate(Date returnedOn){
+        this.returnedOn = returnedOn;
+    }
 
 }
