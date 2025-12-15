@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import java.io.IOException;
+
 /**
  *
  * @author brabev04
@@ -15,15 +17,6 @@ public class Main {
 
 
     public static void main(String[]args){
-//        Library l = new Library();
-//        l.addPerson(2000,"Jaroslav", "Basta", new Contact(10, 777777777, "email"), 'C');
-//        try{
-//            BinaryObjectStore.save("../saves/newfile", l);
-//            System.out.println(BinaryObjectStore.load("../saves/newfile"));
-//        }
-//        catch(Exception e){
-//            System.out.println(e);
-//        }
         Library l = new Library();
 
         for(int i = 0; i<10; i++){
@@ -37,28 +30,24 @@ public class Main {
             }
         }
 
-//        out(l);
-        Item i = l.getItemByID(5);
-        Person client = l.getPersonByID(3);
-//        out(i);
-//        out(client);
-//        out(l.getTransactions());
+        String path = "src/saves/save.txt";
 
-        out(client);
 
-        l.newBorrow(3L,5L,null);
+        Library loaded = null;
 
-        out(client);
-//        out(i);
+        try{
+            BinaryObjectStore.save(path, l);
+            loaded = (Library) BinaryObjectStore.load(path);
 
-        l.newReturn(231);
+        }catch(Exception e){
+            out(e);
+        }
 
-        out(client);
-//        out(i);
+        l = loaded;
+        out(l.getPersonByID(3));
+        out(l.getItemByID(5));
 
-//        out(i);
-//        out(client);
-//        out(l.getTransactions());
+        l.newBorrow(3L, 5L, null);
 
     }
 }

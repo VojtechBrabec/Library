@@ -129,6 +129,8 @@ public class Library implements Serializable{
         return g;
     }
 
+
+
     public Long newBorrow(long clientID, ArrayList<Long> itemsToBorrowID, Date returnBy){
         Client c = (Client) this.getPersonByID(clientID);
         if(returnBy == null){

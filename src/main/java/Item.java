@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 /**
  *
  * @author brabev04
  */
-public class Item {
+public class Item implements Serializable {
     protected long ID;
     protected long inTransactionID = -1;
 

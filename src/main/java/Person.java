@@ -19,7 +19,7 @@ public class Person implements Serializable {
 	protected String surname;
 	protected Contact contact;
     protected Role role;
-    protected HashMap<Long, Transaction> transactions = new HashMap<>();
+//    protected HashMap<Long, Transaction> transactions = new HashMap<>();
 
 	public Person(long ID, int birthYear, String name, String surname, Contact contact, Role role) {
 		this.ID = ID;
@@ -38,10 +38,10 @@ public class Person implements Serializable {
         this.role = role;
 	}
 
-    public long addTransaction(Transaction t){
-        transactions.put(t.getID(), t);
-        return t.getID();
-    }
+//    public long addTransaction(Transaction t){
+//        transactions.put(t.getID(), t);
+//        return t.getID();
+//    }
 
     public long getID(){
         return this.ID;
