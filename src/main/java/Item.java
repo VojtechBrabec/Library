@@ -1,22 +1,24 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  *
  * @author brabev04
  */
-public class Item implements Serializable {
+public class Item implements Serializable, Comparable<Item> {
     protected long ID;
     protected long inTransactionID = -1;
 
     protected String title;
     protected String description;
     protected ArrayList<Genre> genres;
-    protected Person author;
+    protected Author author;
     protected boolean borrowed;
 //    protected ArrayList<Person> authors;
 
 
-    public Item(long ID, /*ArrayList<Person> authors,*/ Person author, String title, String description, ArrayList<Genre>genres){
+    public Item(long ID, /*ArrayList<Person> authors,*/ Author author, String title, String description, ArrayList<Genre>genres){
         this.ID = ID;
         this.borrowed = false;
 //        this.authors = authors;
@@ -26,7 +28,7 @@ public class Item implements Serializable {
         this.genres = genres;
     }
 
-    public Item(long ID, /*ArrayList<Person> authors,*/ Person author, String title, String description, Genre genre){
+    public Item(long ID, /*ArrayList<Person> authors,*/ Author author, String title, String description, Genre genre){
         this.ID = ID;
         this.borrowed = false;
 //        this.authors = authors;
@@ -36,9 +38,6 @@ public class Item implements Serializable {
         this.genres = new  ArrayList<>();
         this.genres.add(genre);
     }
-
-
-
 
     public long getID(){
         return ID;
@@ -80,6 +79,29 @@ public class Item implements Serializable {
     }
 
     @Override
+    public int compareTo(Item i) {
+        return (int) (this.ID - i.getID());
+    }
+
+    @Override
+    public int hashCode(){
+        return (int) ID + Objects.hashCode(title);
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o==null){
+            return false;
+        }
+        if(o.getClass() == this.getClass()){
+            if(o.hashCode() == this.hashCode()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("\n\nID: " + ID + "\n");
@@ -91,4 +113,6 @@ public class Item implements Serializable {
         if(borrowed) sb.append("In Transaction ID: " + inTransactionID + "\n");
         return sb.toString();
     }
+
+
 }

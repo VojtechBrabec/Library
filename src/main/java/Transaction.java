@@ -39,7 +39,7 @@ public abstract class Transaction implements Serializable {
 
     @Override
     public String toString(){
-        return "[ ID: " + ID + " Client " + client + " Items: " + items.toString();
+        return "[ ID: " + ID + " Transaction type: " + transactionType + " Client " + client + " Items: " + items.toString();
     }
 
 }

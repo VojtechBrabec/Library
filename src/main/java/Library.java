@@ -83,7 +83,7 @@ public class Library implements Serializable{
         return ID;
     }
 
-    public long newItem(Shelf shelf, /*ArrayList<Person> authors,*/Person author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException{
+    public long newItem(Shelf shelf, /*ArrayList<Person> authors,*/Author author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException{
         if(shelf ==null || author == null ||title ==null||description ==null|| genres == null){
             throw new IllegalArgumentException("Arguments can't be null");
         }
@@ -92,7 +92,7 @@ public class Library implements Serializable{
         shelf.addItem(i);
         return ID;
     }
-    public long newItem(Shelf shelf, /*ArrayList<Person> authors,*/Person author, String title, String description, Genre genre) throws IllegalArgumentException{
+    public long newItem(Shelf shelf, /*ArrayList<Person> authors,*/Author author, String title, String description, Genre genre) throws IllegalArgumentException{
         if(shelf ==null || author == null ||title ==null||description ==null|| genre == null){
             throw new IllegalArgumentException("Arguments can't be null");
         }
@@ -102,7 +102,7 @@ public class Library implements Serializable{
         return ID;
     }
 
-    public long newItem(long shelfID, /*ArrayList<Person> authors,*/ Person author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException, NullPointerException{
+    public long newItem(long shelfID, /*ArrayList<Person> authors,*/ Author author, String title, String description, ArrayList<Genre>genres) throws IllegalArgumentException, NullPointerException{
         if(author == null ||title ==null||description ==null|| genres == null){
             throw new IllegalArgumentException("Arguments can't be null");
         }

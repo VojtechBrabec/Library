@@ -4,6 +4,8 @@
  */
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -24,7 +26,7 @@ public class Main {
             long pID = l.addPerson(1980+i, "Name"+i,"Surname"+i, null,Role.AUTHOR);
             l.addPerson(1990+i, "Name"+i*100,"Surname"+i*100, null,Role.CLIENT);
             Shelf s = l.getShelfByID(sID);
-            Person p =  l.getPersonByID(pID);
+            Author p =  (Author) l.getPersonByID(pID);
             for(int j = 0; j<10; j++){
                 l.newItem(s, p, "Title"+i+j, "Description"+i+j, l.newGenre("Fantasy", "Dungeons and Dragons"));
             }
@@ -32,22 +34,28 @@ public class Main {
 
         String path = "src/saves/save.txt";
 
-
-        Library loaded = null;
-
-        try{
-            BinaryObjectStore.save(path, l);
-            loaded = (Library) BinaryObjectStore.load(path);
-
-        }catch(Exception e){
-            out(e);
-        }
-
-        l = loaded;
-        out(l.getPersonByID(3));
-        out(l.getItemByID(5));
-
+        Client c = (Client) l.getPersonByID(3L);
+//        out(c);
+        Item i = l.getItemByID(5L);
+//        out(i);
         l.newBorrow(3L, 5L, null);
+        out(l.getTransactions());
+
+//        Library loaded = null;
+
+//        try{
+//            BinaryObjectStore.save(path, l);
+//            loaded = (Library) BinaryObjectStore.load(path);
+//
+//        }catch(Exception e){
+//            out(e);
+//        }
+//
+//        l = loaded;
+//        out(l.getPersonByID(3));
+//        out(l.getItemByID(5));
+//
+//        l.newBorrow(3L, 5L, null);
 
     }
 }
