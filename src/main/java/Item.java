@@ -1,118 +1,14 @@
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Objects;
-
-/**
- *
- * @author brabev04
- */
-public class Item implements Serializable, Comparable<Item> {
-    protected long ID;
-    protected long inTransactionID = -1;
+public class Item {
 
     protected String title;
     protected String description;
-    protected ArrayList<Genre> genres;
-    protected Author author;
-    protected boolean borrowed;
-//    protected ArrayList<Person> authors;
 
 
-    public Item(long ID, /*ArrayList<Person> authors,*/ Author author, String title, String description, ArrayList<Genre>genres){
-        this.ID = ID;
-        this.borrowed = false;
-//        this.authors = authors;
-        this.author = author;
-        this.title = title;
-        this.description = description;
-        this.genres = genres;
-    }
+    protected boolean borrowed = false;
 
-    public Item(long ID, /*ArrayList<Person> authors,*/ Author author, String title, String description, Genre genre){
-        this.ID = ID;
-        this.borrowed = false;
-//        this.authors = authors;
-        this.author = author;
-        this.title = title;
-        this.description = description;
-        this.genres = new  ArrayList<>();
-        this.genres.add(genre);
-    }
 
-    public long getID(){
-        return ID;
-    }
-
-    public boolean isBorrowed() {
-        return borrowed;
-    }
-
-//    public ArrayList<Person> getAuthors() {
-//        return authors;
-//    }
-    public Person getAuthor(){
-        return author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public ArrayList<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setBorrowed(boolean borrowed) {
+    public void setBorrowed(boolean borrowed){
         this.borrowed = borrowed;
     }
-
-    public void setInTransactionID(long ID){
-        this.inTransactionID = ID;
-    }
-
-    public long getInTransactionID(){
-        return  inTransactionID;
-    }
-
-    @Override
-    public int compareTo(Item i) {
-        return (int) (this.ID - i.getID());
-    }
-
-    @Override
-    public int hashCode(){
-        return (int) ID + Objects.hashCode(title);
-    }
-
-    @Override
-    public boolean equals(Object o){
-        if(o==null){
-            return false;
-        }
-        if(o.getClass() == this.getClass()){
-            if(o.hashCode() == this.hashCode()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n\nID: " + ID + "\n");
-        sb.append("Title: " + title + "\n");
-        sb.append("Description: " + description + "\n");
-        sb.append("Aurthor: " + author+ "\n");
-        sb.append("Genres: " + genres+ "\n");
-        sb.append("Borrowed: " + borrowed + "\n");
-        if(borrowed) sb.append("In Transaction ID: " + inTransactionID + "\n");
-        return sb.toString();
-    }
-
 
 }

@@ -1,45 +1,44 @@
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+public abstract class Transaction {
 
-public abstract class Transaction implements Serializable {
-    
-    protected Client client;
-    protected ArrayList<Item> items;
-    protected char transactionType;
-    protected long ID;
-    protected boolean isActive = false;
-    /**
-     * @param transactionType : 'R' = return
-     *                        : 'B' = borrow
-     * */
-    public Transaction(long ID, Client client, ArrayList<Item> items, char transactionType){
-        this.client = client;
-        this.items = items;
-        this.transactionType = transactionType;
-        this.ID = ID;
+    protected long clientID;
+    protected Date createdOn;
+    protected Date returnOn;
+    protected ArrayList<Item> borrowedItems;
+    protected TransactionType tType;
+
+
+    public Transaction (long clientID, Date returnOn, ArrayList<Item> borrowedItems, TransactionType tType){
+        this.clientID = clientID;
+        createdOn = new Date();
+        this.returnOn = returnOn;
+        this.borrowedItems = borrowedItems;
+        this.tType = tType;
     }
 
-    protected abstract void setItemsBorrowed(boolean borrowed);
-
-
-    public long getID(){
-        return this.ID;
+    public Transaction (long clientID, Date returnOn, Item borrowedItems, TransactionType tType){
+        this.clientID = clientID;
+        createdOn = new Date();
+        this.returnOn = returnOn;
+        this.borrowedItems = new ArrayList<>();
+        this.borrowedItems.add(borrowedItems);
+        this.tType = tType;
     }
 
-    public Client getClient(){
-        return client;
-    }
-    public ArrayList<Item> getItems(){
-        return items;
+
+    protected void setBorrowedItems(boolean borrowed){
+        for(Item i:borrowedItems){
+            setBorrowedItems(borrowed, i);
+        }
     }
 
-    public void setIsActive(boolean active){
-        isActive = active;
+    protected void setBorrowedItems(boolean borrowed, Item item){
+        item.setBorrowed(borrowed);
     }
 
-    @Override
-    public String toString(){
-        return "[ ID: " + ID + " Transaction type: " + transactionType + " Client " + client + " Items: " + items.toString();
-    }
+
+
+
 
 }
